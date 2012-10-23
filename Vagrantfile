@@ -2,25 +2,21 @@
 # vi: set ft=ruby :
 
 Vagrant::Config.run do |config|
-  # All Vagrant configuration is done here. The most common configuration
-  # options are documented and commented below. For a complete reference,
-  # please see the online documentation at vagrantup.com.
-
-  # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "lucid32"
-
-  # The url from where the 'config.vm.box' box will be fetched if it
-  # doesn't already exist on the user's system.
-  # config.vm.box_url = "http://domain.com/path/to/above.box"
+  config.host_name = 'catops.ceilingcat.co.uk'
 
   config.vm.customize do |vm|  
-  vm.memory_size = 512  
-  vm.name = "CFEnv"
+    vm.memory_size = 512  
+    vm.name = "CFEnv"
   end
   
   
+  # The url from where the 'config.vm.box' box will be fetched if it
+  # doesn't already exist on the user's system.
+  config.vm.box_url = File.dirname(__FILE__) + "/lucid32.box"
+
   # Boot with a GUI so you can see the screen. (Default is headless)
-  config.vm.boot_mode = :gui
+  # config.vm.boot_mode = :gui
 
   # Assign this VM to a host-only network IP, allowing you to access it
   # via the IP. Host-only networks can talk to the host machine as well as
