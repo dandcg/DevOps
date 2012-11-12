@@ -25,22 +25,27 @@ node 'workspace' {
     rvm::system_user { baphled: ; }
 
     rvm_system_ruby {
-      'ruby-1.9.3-head':
+      'ruby-1.9.3':
         ensure => 'present',
         require  => Exec['apt-get update'],
         default_use => true;
     }
+
+    rvm_gemset {
+      "ruby-1.9.3@global":
+        ensure => present,
+        require => Rvm_system_ruby['ruby-1.9.3'];
+    }
+
+    rvm_gem {
+      'bundler':
+        name => 'bundler',
+        ruby_version => 'ruby-1.9.3',
+        ensure => latest,
+        require => Rvm_system_ruby['ruby-1.9.3']
+    }
   }
 
-  rvm_gemset {
-    "ruby-1.9.3-head@global":
-      ensure => present,
-      require => Rvm_system_ruby['ruby-1.9.3-head'];
-  }
-  rvm_gem {
-    'ruby-1.9.2-p290@myproject/bundler':
-      ensure => '1.0.21',
-      require => Rvm_gemset['ruby-1.9.3-head@global'];
-  }
+  # Install dotfiles for myself
+  # recursively init and update repositories
 }
-
