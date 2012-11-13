@@ -27,7 +27,8 @@ node 'workspace' inherits base {
   if $rvm_installed == 'true' {
     rvm::system_user { baphled: ; }
 
-    # Don't set this to default as puppet will not be found when you try to provision for the 2nd time
+    # Don't set this to default as puppet will not be found when you try to
+    # provision for the 2nd time.
     rvm_system_ruby {
       'ruby-1.9.3':
         ensure => present,

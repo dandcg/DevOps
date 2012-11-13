@@ -4,8 +4,9 @@
 PUPPET_ROOT = "#{File.dirname(__FILE__)}/puppet"
 
 Vagrant::Config.run do |config|
-  config.vm.box = "lucid32"
-  config.vm.box_url = File.dirname(__FILE__) + "/lucid32.box"
+  config.vm.box = "precise64"
+
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
   config.vm.host_name = 'workspace.ceilingcat.co.uk'
   config.vm.network :hostonly, "192.168.33.10"
 
@@ -18,6 +19,6 @@ Vagrant::Config.run do |config|
 
   config.vm.provision :puppet, :module_path => "#{PUPPET_ROOT}/modules" do |puppet|
     puppet.manifests_path = "#{PUPPET_ROOT}/manifests"
-    puppet.manifest_file = "lucid32.pp"
+    puppet.manifest_file = "precise64.pp"
   end
 end
