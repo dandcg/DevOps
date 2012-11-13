@@ -9,7 +9,7 @@ class users {
 
 }
 
-class users::deploy  {
+class users::ssh  {
   file {
     "/home/baphled/.ssh":
       ensure => directory,

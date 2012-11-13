@@ -4,7 +4,7 @@ Exec {
 
 node base {
   include users
-  include users::deploy
+  include users::ssh
   include zsh
 }
 
