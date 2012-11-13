@@ -2,23 +2,25 @@ Exec {
   path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 }
 
-class users {
-  user { "baphled":
-    ensure => present,
-    shell => "/bin/bash",
-    managehome => true
-  }
+class rvm::setup  {
 }
 
-# setup a common workspace
-node 'workspace' {
+node base {
   include users
+  include zsh
+}
+# setup a common workspace
+node 'workspace' inherits base {
   include rvm
+  include vim
+  include dotfiles
 
   # Make sure apt-get update has been run
-  exec { "apt-get update":
-    command => "/usr/bin/apt-get update",
-    onlyif => "/bin/sh -c '[ ! -f /var/cache/apt/pkgcache.bin ] || /usr/bin/find /etc/apt/* -cnewer /var/cache/apt/pkgcache.bin | /bin/grep . > /dev/null'",
+  # FIXME: This isn't being run for some reason
+  # Should run `apt-get update` manually for now
+  exec {
+    "apt-get update":
+      command => "/usr/bin/apt-get update",
   }
 
   if $rvm_installed == 'true' {
@@ -27,7 +29,7 @@ node 'workspace' {
     # Don't set this to default as puppet will not be found when you try to provision for the 2nd time
     rvm_system_ruby {
       'ruby-1.9.3':
-        ensure => 'present',
+        ensure => present,
         require  => Exec['apt-get update'],
     }
 
@@ -45,7 +47,4 @@ node 'workspace' {
         require => Rvm_system_ruby['ruby-1.9.3']
     }
   }
-
-  # Install dotfiles for myself
-  # recursively init and update repositories
 }
