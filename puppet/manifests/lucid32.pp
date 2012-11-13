@@ -12,6 +12,7 @@ node base {
 # setup a common workspace
 node 'workspace' inherits base {
   include rvm
+  include tmux
   include vim
   include dotfiles
 
