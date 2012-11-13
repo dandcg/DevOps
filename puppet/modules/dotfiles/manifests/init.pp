@@ -14,8 +14,6 @@ class dotfiles {
     force => true,
   }
 
-  # vim compiled with ruby and python support
-
   # recursively init and update repositories
   # TODO: This should be a dotfiles script
 

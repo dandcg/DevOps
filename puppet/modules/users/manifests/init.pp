@@ -1,3 +1,4 @@
+# This will handle generating all user credentials and allowing other to log into a VM/instance using their SSH keys
 class users {
   user {
     "baphled":
