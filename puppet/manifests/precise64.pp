@@ -2,13 +2,12 @@ Exec {
   path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 }
 
-class rvm::setup  {
-}
-
 node base {
   include users
+  include users::deploy
   include zsh
 }
+
 # setup a common workspace
 node 'workspace' inherits base {
   include rvm
