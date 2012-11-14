@@ -14,6 +14,8 @@ node 'workspace' inherits base {
   include tmux
   include vim
   include dotfiles
+  include locales
+
 
   # Make sure apt-get update has been run
   # FIXME: This isn't being run for some reason

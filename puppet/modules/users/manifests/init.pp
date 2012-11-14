@@ -14,7 +14,7 @@ class users::ssh  {
   file {
     "/home/baphled/.ssh":
       ensure => directory,
-      require => class['users']
+      require => Class['users'],
   }
 
   file {
