@@ -1,21 +1,27 @@
 class locales {
 
-	package { "locales": 
-	ensure => "latest",
-	}
-
 	file { "/etc/locale.gen":
-		source => ["puppet:///locales/locale.gen"],
-			owner => "root",
-			group => "root",
-			mode => 644,
-			require => Package["locales"],
+		source => "puppet:///modules/locales/locale.gen",
+		require => Package["locales"],
+		notify => Exec["locale-gen"],
+		owner => root,
+		group => root,
 	}
 
-	exec { "/usr/sbin/locale-gen":
-		subscribe => File["/etc/locale.gen"],
+	file { "/etc/default/locale":
+		source => "puppet:///modules/locales/locale",
+		require => Package["locales"],
+		owner => root,
+		group => root,
+	}
+
+	exec { "locale-gen":
+		path        => "/usr/bin:/bin:/usr/sbin:/sbin",
+		command     => "locale-gen",
 		refreshonly => true,
-		require => [ Package["locales"], File["/etc/locale.gen"] ]
 	}
 
+	# Login configuration.
+	package { "locales": }
 }
+
