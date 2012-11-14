@@ -4,20 +4,10 @@ Exec {
 
 node base {
   include users
-  include users::ssh
-  include zsh
-}
-
-# setup a common workspace
-node 'workspace' inherits base {
-  include rvm
-  include tmux
-  include vim
-  include dotfiles
   include locales
 
-
   # Make sure apt-get update has been run
+
   # FIXME: This isn't being run for some reason
   # Should run `apt-get update` manually for now
   exec {
@@ -50,4 +40,18 @@ node 'workspace' inherits base {
         require => Rvm_system_ruby['ruby-1.9.3']
     }
   }
+}
+
+# setup a common workspace
+node 'workspace' inherits base {
+  include users::ssh
+  include zsh
+  include rvm
+  include tmux
+  include vim
+  include dotfiles
+}
+
+node 'ci' {
+  include jenkins
 }
